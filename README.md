@@ -80,5 +80,3 @@ El proyecto sigue el patrón **MVC (Model – View – Controller)**:
 - **Repository:** Maneja la comunicación con la base de datos.
 
 ---
-
-# Estructura del Proyecto
