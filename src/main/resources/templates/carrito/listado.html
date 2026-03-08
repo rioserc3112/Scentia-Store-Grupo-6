@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Mi Carrito — Scentia Store</title>
+
+  <!-- Bootstrap via WebJars -->
+  <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+
+  <style>
+    body { background-color: #f8f5f0; }
+    .table-carrito th { background-color: #4a3728; color: #fff; }
+    .img-carrito { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+    .btn-eliminar { background: none; border: none; color: #dc3545; font-size: 1.1rem; cursor: pointer; }
+    .btn-eliminar:hover { color: #a71d2a; }
+    .total-row td { font-weight: bold; font-size: 1.1rem; background-color: #f0ebe3; }
+    .section-title { font-family: Georgia, serif; }
+  </style>
+</head>
+<body>
+
+<!-- Navbar fragment -->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container my-4">
+
+  <!-- Mensajes flash -->
+  <div th:replace="~{fragments/navbar :: mensajes}"></div>
+
+  <!-- Encabezado -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 section-title mb-0">🛒 Mi Carrito</h1>
+    <a th:href="@{/catalogo}" class="btn btn-outline-dark btn-sm">← Seguir comprando</a>
+  </div>
+
+  <!-- Carrito vacío -->
+  <div th:if="${carrito.empty}" class="text-center py-5">
+    <p class="fs-5 text-muted">Tu carrito está vacío.</p>
+    <a th:href="@{/catalogo}" class="btn btn-dark">Ver catálogo de perfumes</a>
+  </div>
+
+  <!-- Tabla del carrito -->
+  <div th:unless="${carrito.empty}">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-carrito align-middle mb-0">
+            <thead>
+              <tr>
+                <th class="ps-3" style="width:70px">Imagen</th>
+                <th>Producto</th>
+                <th class="text-end">Precio unit.</th>
+                <th class="text-center" style="width:160px">Cantidad</th>
+                <th class="text-end">Subtotal</th>
+                <th class="text-center pe-3" style="width:60px">Quitar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="item : ${carrito.items}">
+
+                <!-- Imagen -->
+                <td class="ps-3">
+                  <img th:src="${item.imagenUrl != null and !#strings.isEmpty(item.imagenUrl)}
+                                   ? ${item.imagenUrl}
+                                   : '/images/placeholder-perfume.jpg'"
+                       th:alt="${item.nombreProducto}"
+                       class="img-carrito"/>
+                </td>
+
+                <!-- Nombre / Marca / Presentación -->
+                <td>
+                  <span class="fw-semibold" th:text="${item.nombreProducto}">Nombre</span><br/>
+                  <small class="text-muted" th:if="${item.marcaProducto}" th:text="${item.marcaProducto}"></small>
+                  <small class="text-secondary d-block" th:if="${item.presentacionProducto}"
+                         th:text="${item.presentacionProducto}"></small>
+                </td>
+
+                <!-- Precio unitario -->
+                <td class="text-end"
+                    th:text="'₡' + ${#numbers.formatDecimal(item.precioUnitario, 1, 'COMMA', 2, 'POINT')}">
+                </td>
+
+                <!-- HU-06: Modificar cantidad -->
+                <td class="text-center">
+                  <form th:action="@{/carrito/actualizar}" method="post" class="d-flex align-items-center justify-content-center gap-1">
+                    <input type="hidden" name="productoId" th:value="${item.productoId}"/>
+                    <input type="number" name="cantidad"
+                           th:value="${item.cantidad}"
+                           min="1" max="99"
+                           class="form-control form-control-sm text-center"
+                           style="width:65px"
+                           onchange="this.form.submit()"/>
+                  </form>
+                </td>
+
+                <!-- Subtotal -->
+                <td class="text-end fw-semibold"
+                    th:text="'₡' + ${#numbers.formatDecimal(item.subtotal, 1, 'COMMA', 2, 'POINT')}">
+                </td>
+
+                <!-- HU-07: Eliminar ítem -->
+                <td class="text-center pe-3">
+                  <form th:action="@{/carrito/eliminar}" method="post" style="display:inline">
+                    <input type="hidden" name="productoId" th:value="${item.productoId}"/>
+                    <button type="submit" class="btn-eliminar" title="Eliminar"
+                            onclick="return confirm('¿Eliminar este producto del carrito?')">
+                      🗑
+                    </button>
+                  </form>
+                </td>
+
+              </tr>
+            </tbody>
+
+            <!-- Total general -->
+            <tfoot>
+              <tr class="total-row">
+                <td colspan="4" class="text-end ps-3">Total:</td>
+                <td class="text-end"
+                    th:text="'₡' + ${#numbers.formatDecimal(carrito.total, 1, 'COMMA', 2, 'POINT')}">
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div><!-- /table-responsive -->
+      </div><!-- /card-body -->
+    </div><!-- /card -->
+
+    <!-- Acciones finales -->
+    <div class="d-flex justify-content-between mt-4 flex-wrap gap-2">
+      <a th:href="@{/catalogo}" class="btn btn-outline-secondary">← Seguir comprando</a>
+      <!-- Placeholder: el botón de confirmar pedido lo implementará otra persona -->
+      <button class="btn btn-dark" disabled title="Funcionalidad de pago pendiente de implementación">
+        Confirmar pedido →
+      </button>
+    </div>
+
+  </div><!-- /th:unless carrito vacío -->
+</div><!-- /container -->
+
+<!-- Bootstrap JS via WebJars -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
