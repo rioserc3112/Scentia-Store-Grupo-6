@@ -78,16 +78,16 @@
                      th:unless="${#lists.isEmpty(productos)}">
 
                     <div class="col animate-in" th:each="producto : ${productos}">
-                        <div class="card-producto h-100">
+                        <div class="card-producto" style="display:flex; flex-direction:column; height:100%;">
 
                             <img th:src="${producto.imagenUrl != null and !#strings.isEmpty(producto.imagenUrl)}
                                          ? ${producto.imagenUrl}
                                          : '/images/placeholder-perfume.jpg'"
                                  th:alt="${producto.nombre}"
                                  class="card-img-top w-100"
-                                 style="height:240px; object-fit:cover;"/>
+                                 style="height:240px; object-fit:cover; flex-shrink:0;"/>
 
-                            <div class="p-4 d-flex flex-column h-100">
+                            <div class="p-4" style="display:flex; flex-direction:column; flex:1;">
 
                                 <!-- Badge disponibilidad -->
                                 <span th:with="disp=${producto.disponibilidad}"
@@ -101,11 +101,11 @@
                                    th:if="${producto.presentacion}"
                                    th:text="'Presentación: ' + ${producto.presentacion}"></p>
 
-                                <p class="small flex-grow-1" style="color:var(--text-muted); line-height:1.7;"
+                                <p class="small" style="color:var(--text-muted); line-height:1.7; flex:1;"
                                    th:text="${#strings.abbreviate(producto.descripcion, 100)}"
                                    th:if="${producto.descripcion}"></p>
 
-                                <div class="mt-auto pt-3" style="border-top:1px solid var(--border);">
+                                <div class="pt-3 mt-auto" style="border-top:1px solid var(--border);">
                                     <p class="text-white mb-1" style="font-size:1.2rem; font-weight:300;"
                                        th:text="'₡' + ${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}">₡0.00</p>
                                     <p class="small mb-3" style="color:var(--text-muted);"
