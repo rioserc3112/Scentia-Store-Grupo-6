@@ -26,6 +26,7 @@
           <a class="nav-link" th:href="@{/catalogo}">Catálogo</a>
         </li>
       </ul>
+        
 
       <!-- Carrito con badge -->
       <a th:href="@{/carrito}" class="btn btn-outline-warning btn-sm position-relative">
@@ -33,6 +34,12 @@
         <span th:if="${cantidadCarrito != null and cantidadCarrito > 0}"
               class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
               th:text="${cantidadCarrito}">0</span>
+      </a>
+      
+      <a sec:authorize="hasRole('ROLE_ADMIN')" 
+         th:href="@{/producto/listado}" 
+         class="btn btn-outline-info btn-sm me-2">
+         <i class="fas fa-tools"></i> Administrar Productos
       </a>
     </div>
 
