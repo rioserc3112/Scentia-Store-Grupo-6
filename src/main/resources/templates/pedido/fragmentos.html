@@ -1,0 +1,49 @@
+<section th:fragment="listadoPedidos">
+
+      <div class="container mt-5">
+
+            <h2 class="text-center text-white mb-4">Pedidos realizados</h2>
+
+            <table class="table table-dark table-hover">
+
+                  <thead>
+                        <tr>
+                              <th>ID</th>
+                              <th>Subtotal</th>
+                              <th>Total</th>
+                              <th>Estado</th>
+                              <th>Acciones</th>
+                        </tr>
+                  </thead>
+
+                  <tbody>
+
+                        <tr th:each="p : ${pedidos}">
+                              <td th:text="${p.idPedido}"></td>
+                              <td th:text="${p.subtotal}"></td>
+                              <td th:text="${p.total}"></td>
+                              <td th:text="${p.estado}"></td>
+
+                              <td>
+
+                                    <form th:action="@{/pedido/confirmar}" method="post">
+                                          <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
+                                          <button class="btn btn-success btn-sm">Pagar</button>
+                                    </form>
+
+                                    <form th:action="@{/pedido/cancelar}" method="post">
+                                          <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
+                                          <button class="btn btn-danger btn-sm">Cancelar</button>
+                                    </form>
+
+                              </td>
+
+                        </tr>
+
+                  </tbody>
+
+            </table>
+
+      </div>
+
+</section>
