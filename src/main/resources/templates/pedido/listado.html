@@ -1,80 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pedidos realizados — Scentia Store</title>
-
-  <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-
-  <style>
-    body {
-      background-color: #f8f5f0;
-    }
-
-    .section-title {
-      font-family: Georgia, serif;
-    }
-  </style>
-</head>
+<head th:replace="~{general/fragmentos :: head}"/>
 
 <body>
-
-  <div th:replace="~{fragmentos/navbar :: navbar}"></div>
-
-  <div class="container my-4">
-    <h1 class="h3 section-title mb-4">Pedidos realizados</h1>
-
-    <div th:if="${#lists.isEmpty(pedidos)}" class="text-center py-5">
-      <h4>No hay pedidos registrados</h4>
-      <a th:href="@{/catalogo}" class="btn btn-dark mt-3">Ir al catálogo</a>
-    </div>
-
-    <div th:unless="${#lists.isEmpty(pedidos)}" class="card shadow-sm border-0">
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table align-middle">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Subtotal</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="p : ${pedidos}">
-                <td th:text="${p.idPedido}"></td>
-                <td th:text="'₡' + ${#numbers.formatDecimal(p.subtotal, 1, 'COMMA', 2, 'POINT')}"></td>
-                <td th:text="'₡' + ${#numbers.formatDecimal(p.total, 1, 'COMMA', 2, 'POINT')}"></td>
-                <td>
-                  <span class="badge"
-                    th:classappend="${p.estado.name() == 'PENDIENTE'} ? ' bg-warning text-dark' : (${p.estado.name() == 'PAGADO'} ? ' bg-success' : ' bg-danger')"
-                    th:text="${p.estado}">
-                  </span>
-                </td>
-                <td class="d-flex gap-2 flex-wrap">
-                  <form th:action="@{/pedido/confirmar}" method="post" th:if="${p.estado.name() == 'PENDIENTE'}">
-                    <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
-                    <button class="btn btn-success btn-sm">Marcar pagado</button>
-                  </form>
-
-                  <form th:action="@{/pedido/cancelar}" method="post" th:if="${p.estado.name() == 'PENDIENTE'}">
-                    <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
-                    <button class="btn btn-danger btn-sm">Cancelar</button>
-                  </form>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <header th:replace="~{general/fragmentos :: header}"/>
+    <section th:replace="~{pedido/fragmentos :: listadoPedidos}"/>
+    <section th:replace="~{general/fragmentos :: mostrarToast}"/>
+    <footer th:replace="~{general/fragmentos :: footer}"/>
 </body>
 
 </html>

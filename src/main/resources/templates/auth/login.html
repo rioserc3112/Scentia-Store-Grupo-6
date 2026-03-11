@@ -1,75 +1,73 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Iniciar sesión — Scentia Store</title>
-
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-
-    <style>
-        body {
-            background-color: #f8f5f0;
-        }
-
-        .section-title {
-            font-family: Georgia, serif;
-        }
-    </style>
-</head>
+<head th:replace="~{general/fragmentos :: head}"/>
 
 <body>
 
-    <div class="container py-5">
+<!-- Sin navbar en login — pantalla de bienvenida -->
+<div class="d-flex align-items-center justify-content-center"
+     style="min-height:100vh; background: radial-gradient(ellipse at 60% 40%, #1a0030 0%, #000 70%);">
 
-        <div class="row justify-content-center">
-            <div class="col-md-5">
+    <div class="auth-card animate-in">
 
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body p-4">
-
-                        <h1 class="h4 text-center section-title mb-4">
-                            Iniciar sesión
-                        </h1>
-
-                        <div th:if="${mensajeError}" class="alert alert-danger" th:text="${mensajeError}"></div>
-                        <div th:if="${mensajeExito}" class="alert alert-success" th:text="${mensajeExito}"></div>
-
-                        <form th:action="@{/auth/login}" method="post">
-
-                            <div class="mb-3">
-                                <label class="form-label">Correo electrónico</label>
-                                <input type="email" name="correo" class="form-control" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <input type="password" name="password" class="form-control" required>
-                            </div>
-
-                            <button type="submit" class="btn btn-dark w-100">
-                                Ingresar
-                            </button>
-
-                        </form>
-
-                        <div class="text-center mt-3">
-                            <a th:href="@{/auth/registro}">
-                                ¿No tienes cuenta? Regístrate
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
+        <!-- Encabezado -->
+        <div class="auth-header text-center">
+            <p class="label-xs mb-2" style="color:var(--purple-light);">Bienvenido de vuelta</p>
+            <h1 class="serif text-white" style="font-size:2rem;">Iniciar sesión</h1>
+            <p class="small mt-2 mb-0" style="color:var(--text-muted);">Scentia Store · Fragancias premium</p>
         </div>
 
-    </div>
+        <!-- Body -->
+        <div class="auth-body">
 
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+            <!-- Alertas -->
+            <div th:if="${mensajeError}"
+                 class="mb-4 p-3 animate-in"
+                 style="background:rgba(231,76,60,0.08); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; font-size:0.85rem;">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <span th:text="${mensajeError}"></span>
+            </div>
+            <div th:if="${mensajeExito}"
+                 class="mb-4 p-3 animate-in"
+                 style="background:rgba(39,174,96,0.08); border:1px solid rgba(39,174,96,0.3); color:#27ae60; font-size:0.85rem;">
+                <i class="fas fa-check-circle me-2"></i>
+                <span th:text="${mensajeExito}"></span>
+            </div>
+
+            <!-- Formulario -->
+            <form th:action="@{/auth/login}" method="post">
+
+                <div class="mb-4">
+                    <label class="label-xs d-block mb-2">Correo electrónico</label>
+                    <input type="email" name="correo" class="form-control-dark w-100"
+                           placeholder="tu@correo.com" required/>
+                </div>
+
+                <div class="mb-5">
+                    <label class="label-xs d-block mb-2">Contraseña</label>
+                    <input type="password" name="password" class="form-control-dark w-100"
+                           placeholder="••••••••" required/>
+                </div>
+
+                <button type="submit" class="btn-luxury w-100">
+                    Ingresar <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+
+            </form>
+
+            <div class="text-center mt-4">
+                <a th:href="@{/auth/registro}"
+                   class="text-decoration-none small"
+                   style="color:var(--text-secondary);">
+                    ¿No tienes cuenta?
+                    <span style="color:var(--purple-light); margin-left:4px;">Regístrate</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 </body>
-
 </html>

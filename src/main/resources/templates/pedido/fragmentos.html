@@ -1,49 +1,85 @@
-<section th:fragment="listadoPedidos">
+<section th:fragment="listadoPedidos"
+         class="py-5"
+         style="background:var(--bg-black); min-height:70vh;"
+         xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid px-5">
 
-      <div class="container mt-5">
+        <!-- Cabecera -->
+        <div class="d-flex justify-content-between align-items-end mb-5 pb-4"
+             style="border-bottom:1px solid var(--border);">
+            <div>
+                <p class="label-xs mb-2" style="color:var(--purple-light);">Historial</p>
+                <h1 class="text-white fw-bold m-0" style="letter-spacing:-1.5px; font-size:2.2rem;">Pedidos realizados</h1>
+            </div>
+            <a th:href="@{/catalogo}" class="btn-luxury-outline">
+                <i class="fas fa-store me-2"></i> Volver al catálogo
+            </a>
+        </div>
 
-            <h2 class="text-center text-white mb-4">Pedidos realizados</h2>
+        <!-- Sin pedidos -->
+        <div th:if="${#lists.isEmpty(pedidos)}" class="text-center py-5">
+            <i class="fas fa-box-open mb-4" style="font-size:3rem; color:var(--text-muted);"></i>
+            <h4 class="text-white fw-light mb-2">No hay pedidos registrados</h4>
+            <p class="mb-5" style="color:var(--text-secondary);">Cuando realices tu primera compra, aparecerá aquí.</p>
+            <a th:href="@{/catalogo}" class="btn-luxury">Ir al catálogo</a>
+        </div>
 
-            <table class="table table-dark table-hover">
+        <!-- Tabla de pedidos -->
+        <div th:unless="${#lists.isEmpty(pedidos)}" class="table-responsive">
+            <table class="table-premium w-100">
+                <thead>
+                    <tr>
+                        <th>Pedido</th>
+                        <th class="text-end">Subtotal</th>
+                        <th class="text-end">Total</th>
+                        <th class="text-center">Estado</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${pedidos}" class="animate-in">
 
-                  <thead>
-                        <tr>
-                              <th>ID</th>
-                              <th>Subtotal</th>
-                              <th>Total</th>
-                              <th>Estado</th>
-                              <th>Acciones</th>
-                        </tr>
-                  </thead>
+                        <td>
+                            <span class="text-white font-monospace">#[[${p.idPedido}]]</span>
+                        </td>
 
-                  <tbody>
+                        <td class="text-end text-white"
+                            th:text="'₡' + ${#numbers.formatDecimal(p.subtotal, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
 
-                        <tr th:each="p : ${pedidos}">
-                              <td th:text="${p.idPedido}"></td>
-                              <td th:text="${p.subtotal}"></td>
-                              <td th:text="${p.total}"></td>
-                              <td th:text="${p.estado}"></td>
+                        <td class="text-end text-white fw-bold"
+                            th:text="'₡' + ${#numbers.formatDecimal(p.total, 1, 'COMMA', 2, 'POINT')}">₡0.00</td>
 
-                              <td>
+                        <td class="text-center">
+                            <span class="badge-estado"
+                                  th:classappend="${p.estado.name() == 'PENDIENTE'} ? 'badge-pendiente' :
+                                                  (${p.estado.name() == 'PAGADO'}   ? 'badge-pagado'    : 'badge-cancelado')"
+                                  th:text="${p.estado}">ESTADO</span>
+                        </td>
 
-                                    <form th:action="@{/pedido/confirmar}" method="post">
-                                          <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
-                                          <button class="btn btn-success btn-sm">Pagar</button>
-                                    </form>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2 flex-wrap">
+                                <form th:action="@{/pedido/confirmar}" method="post"
+                                      th:if="${p.estado.name() == 'PENDIENTE'}">
+                                    <input type="hidden" name="idPedido" th:value="${p.idPedido}"/>
+                                    <button class="btn-text-action btn-text-edit">
+                                        <i class="fas fa-check me-1"></i> Pagar
+                                    </button>
+                                </form>
 
-                                    <form th:action="@{/pedido/cancelar}" method="post">
-                                          <input type="hidden" name="idPedido" th:value="${p.idPedido}" />
-                                          <button class="btn btn-danger btn-sm">Cancelar</button>
-                                    </form>
+                                <form th:action="@{/pedido/cancelar}" method="post"
+                                      th:if="${p.estado.name() == 'PENDIENTE'}">
+                                    <input type="hidden" name="idPedido" th:value="${p.idPedido}"/>
+                                    <button class="btn-text-action btn-text-delete">
+                                        <i class="fas fa-times me-1"></i> Cancelar
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
 
-                              </td>
-
-                        </tr>
-
-                  </tbody>
-
+                    </tr>
+                </tbody>
             </table>
+        </div>
 
-      </div>
-
+    </div>
 </section>

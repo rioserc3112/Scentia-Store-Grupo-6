@@ -1,55 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-  <div class="container">
+<!--
+    fragmentos/navbar.html
+    ─────────────────────────────────────────────────────────
+    Este archivo redirige al fragmento centralizado en general/fragmentos.html
+    para mantener compatibilidad con páginas que usan ~{fragmentos/navbar :: navbar}
+-->
 
-    <a class="navbar-brand fw-bold letter-spacing-1" th:href="@{/catalogo}">
-      Scentia Store
-    </a>
+<nav th:fragment="navbar" th:replace="~{general/fragmentos :: header}"></nav>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-      aria-controls="navbarMain" aria-expanded="false" aria-label="Menú">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarMain">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/catalogo}">Catálogo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/pedido/listado}">Pedidos</a>
-        </li>
-      </ul>
-        
-
-      <a th:href="@{/carrito}" class="btn btn-outline-warning btn-sm position-relative">
-        🛒 Carrito
-        <span th:if="${cantidadCarrito != null and cantidadCarrito > 0}"
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-          th:text="${cantidadCarrito}">0</span>
-      </a>
-      
-      <a sec:authorize="hasRole('ROLE_ADMIN')" 
-         th:href="@{/producto/listado}" 
-         class="btn btn-outline-info btn-sm me-2">
-         <i class="fas fa-tools"></i> Administrar Productos
-      </a>
+<div th:fragment="mensajes" xmlns:th="http://www.thymeleaf.org">
+    <div th:if="${mensajeExito}"
+         class="alert animate-in mb-0"
+         style="background:rgba(39,174,96,0.1); border:1px solid rgba(39,174,96,0.3); border-radius:0; color:#2ecc71;"
+         role="alert">
+        <i class="fas fa-check-circle me-2"></i>
+        <span th:text="${mensajeExito}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"
+                style="filter:invert(1); opacity:0.5;"></button>
     </div>
-
-  </div>
-</nav>
-
-<div th:fragment="mensajes" class="container mt-3">
-  <div th:if="${mensajeExito}" class="alert alert-success alert-dismissible fade show" role="alert">
-    <span th:text="${mensajeExito}"></span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-  </div>
-  <div th:if="${mensajeError}" class="alert alert-danger alert-dismissible fade show" role="alert">
-    <span th:text="${mensajeError}"></span>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-  </div>
+    <div th:if="${mensajeError}"
+         class="alert animate-in mb-0"
+         style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); border-radius:0; color:#e74c3c;"
+         role="alert">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span th:text="${mensajeError}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"
+                style="filter:invert(1); opacity:0.5;"></button>
+    </div>
 </div>
 
 </html>

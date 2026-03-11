@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pedido confirmado — Scentia Store</title>
-
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-
-    <style>
-        body {
-            background-color: #f8f5f0;
-        }
-
-        .section-title {
-            font-family: Georgia, serif;
-        }
-    </style>
-</head>
+<head th:replace="~{general/fragmentos :: head}"/>
 
 <body>
 
-    <div th:replace="~{fragmentos/navbar :: navbar}"></div>
+<header th:replace="~{general/fragmentos :: header}"/>
 
-    <div class="container py-5">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body text-center p-5">
+<!-- ── Confirmación ───────────────────────────── -->
+<section class="py-5 d-flex align-items-center justify-content-center"
+         style="background:var(--bg-black); min-height:80vh;">
+    <div class="text-center animate-in" style="max-width:560px; width:100%; padding:0 1.5rem;">
 
-                <h1 class="section-title mb-3">Pedido realizado con éxito</h1>
+        <!-- Icono de éxito -->
+        <div class="mb-5">
+            <div class="mx-auto mb-4"
+                 style="width:80px; height:80px; border:1px solid rgba(39,174,96,0.4);
+                        display:flex; align-items:center; justify-content:center;">
+                <i class="fas fa-check" style="font-size:2rem; color:#27ae60;"></i>
+            </div>
+            <p class="label-xs mb-2" style="color:var(--purple-light);">Scentia Store</p>
+            <h1 class="serif text-white mb-3" style="font-size:2.5rem;">Pedido confirmado</h1>
+            <p style="color:var(--text-secondary);">Gracias por tu compra. Recibirás tus fragancias pronto.</p>
+        </div>
 
-                <p class="lead text-muted">Gracias por tu compra en Scentia Store.</p>
-
-                <p class="fs-5 mb-2">
-                    <strong>Número de pedido:</strong>
-                    <span th:text="${pedido.idPedido}"></span>
-                </p>
-
-                <p class="fs-5">
-                    <strong>Total del pedido:</strong>
-                    <span th:text="'₡' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}"></span>
-                </p>
-
-                <div class="d-flex justify-content-center gap-2 flex-wrap mt-4">
-                    <a th:href="@{/catalogo}" class="btn btn-dark">Volver al catálogo</a>
-                    <a th:href="@{/pedido/listado}" class="btn btn-outline-secondary">Ver pedidos realizados</a>
-                </div>
-
+        <!-- Detalles del pedido -->
+        <div class="mb-5" style="background:var(--bg-card); border:1px solid var(--border); padding:2rem;">
+            <div class="d-flex justify-content-between mb-3">
+                <span class="label-xs">Número de pedido</span>
+                <span class="text-white font-monospace">#<span th:text="${pedido.idPedido}"></span></span>
+            </div>
+            <div class="d-flex justify-content-between" style="border-top:1px solid var(--border); padding-top:1rem; margin-top:0.5rem;">
+                <span class="label-xs">Total</span>
+                <span class="text-white fw-bold" style="font-size:1.1rem;"
+                      th:text="'₡' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}">₡0.00</span>
             </div>
         </div>
+
+        <!-- Acciones -->
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+            <a th:href="@{/catalogo}" class="btn-luxury">
+                <i class="fas fa-store me-2"></i> Volver al catálogo
+            </a>
+            <a th:href="@{/pedido/listado}" class="btn-luxury-outline">
+                Ver mis pedidos
+            </a>
+        </div>
+
     </div>
+</section>
 
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<footer th:replace="~{general/fragmentos :: footer}"/>
+
 </body>
-
 </html>
