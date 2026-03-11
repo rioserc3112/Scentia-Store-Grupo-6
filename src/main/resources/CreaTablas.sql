@@ -20,6 +20,23 @@ CREATE TABLE IF NOT EXISTS productos (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE pedido(
+id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+estado VARCHAR(20),
+subtotal DECIMAL(12,2),
+total DECIMAL(12,2)
+);
+
+CREATE TABLE pedido_detalle(
+id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+cantidad INT,
+precio DECIMAL(12,2),
+id_producto INT,
+id_pedido INT,
+FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+);
+
 -- Productos de ejemplo
 INSERT INTO productos (nombre, descripcion, precio, imagen_url, stock, categoria, presentacion, marca, activo)
 VALUES
