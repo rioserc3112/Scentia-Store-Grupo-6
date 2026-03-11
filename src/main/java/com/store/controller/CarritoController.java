@@ -93,4 +93,23 @@ public class CarritoController {
         redirectAttributes.addFlashAttribute("mensajeExito", "Producto eliminado del carrito.");
         return "redirect:/carrito";
     }
+    
+     /**
+     * HU-11 — Confirmación visual del pedido.
+     * POST /carrito/confirmar
+     */
+    @PostMapping("/confirmar")
+    public String confirmarPedido(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        Carrito carrito = carritoService.obtenerCarrito(session);
+
+        if (carrito.isEmpty()) {
+            redirectAttributes.addFlashAttribute("mensajeError", "No puedes confirmar un pedido con el carrito vacío.");
+            return "redirect:/carrito";
+        }
+
+        model.addAttribute("total", carrito.getTotal());
+        carritoService.vaciar(session);
+
+        return "pedido/confirmacion";
+    }
 }

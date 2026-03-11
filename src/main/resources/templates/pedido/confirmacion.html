@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Pedido confirmado — Scentia Store</title>
+
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+
+    <style>
+        body { background-color: #f8f5f0; }
+        .section-title { font-family: Georgia, serif; }
+    </style>
+</head>
+<body>
+
+<div th:replace="~{fragmentos/navbar :: navbar}"></div>
+
+<div class="container py-5">
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body text-center p-5">
+
+            <h1 class="section-title mb-3">
+                Pedido realizado con éxito
+            </h1>
+
+            <p class="lead text-muted">
+                Gracias por tu compra en Scentia Store.
+            </p>
+
+            <p class="fs-5">
+                <strong>Total del pedido:</strong>
+                <span th:text="'₡' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'POINT')}"></span>
+            </p>
+
+            <a th:href="@{/catalogo}" class="btn btn-dark mt-3">
+                Volver al catálogo
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>
