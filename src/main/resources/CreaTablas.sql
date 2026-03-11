@@ -28,13 +28,13 @@ total DECIMAL(12,2)
 );
 
 CREATE TABLE pedido_detalle(
-id_detalle INT AUTO_INCREMENT PRIMARY KEY,
-cantidad INT,
-precio DECIMAL(12,2),
-id_producto INT,
-id_pedido INT,
-FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
-FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    cantidad INT,
+    precio DECIMAL(12,2),
+    id_producto BIGINT,
+    id_pedido INT,
+    FOREIGN KEY (id_producto) REFERENCES productos(id),
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido)
 );
 
 -- Productos de ejemplo
