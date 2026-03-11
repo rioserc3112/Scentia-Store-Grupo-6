@@ -28,7 +28,9 @@ public class UsuarioService {
             return "Ya existe una cuenta con ese correo.";
         }
 
-        Usuario usuario = new Usuario(nombre, correo, password);
+        // Crear usuario con rol por defecto
+        Usuario usuario = new Usuario(nombre, correo, password, "USER");
+
         usuarioRepository.save(usuario);
         return null;
     }

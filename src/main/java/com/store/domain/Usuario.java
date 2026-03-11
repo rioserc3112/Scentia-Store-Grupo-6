@@ -19,13 +19,17 @@ public class Usuario {
     @Column(nullable = false, length = 100)
     private String password;
 
+    @Column(nullable = false, length = 20)
+    private String rol = "USER"; // USER o ADMIN
+
     public Usuario() {
     }
 
-    public Usuario(String nombre, String correo, String password) {
+    public Usuario(String nombre, String correo, String password, String rol) {
         this.nombre = nombre;
         this.correo = correo;
         this.password = password;
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -54,5 +58,13 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 }
