@@ -10,7 +10,6 @@ import com.store.repository.PedidoRepository;
 import com.store.repository.ProductoRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +31,6 @@ public class PedidoService {
     @Transactional(readOnly = true)
     public List<Pedido> getPedidos() {
         return pedidoRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public Optional<Pedido> getPedido(Integer idPedido) {
-        return pedidoRepository.findById(idPedido);
-    }
-
-    @Transactional
-    public Pedido save(Pedido pedido) {
-        return pedidoRepository.save(pedido);
     }
 
     @Transactional

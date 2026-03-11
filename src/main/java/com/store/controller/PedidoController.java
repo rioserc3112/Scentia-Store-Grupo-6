@@ -22,7 +22,6 @@ public class PedidoController {
         var pedidos = pedidoService.getPedidos();
 
         model.addAttribute("pedidos", pedidos);
-        model.addAttribute("totalPedidos", pedidos.size());
 
         return "/pedido/listado";
     }

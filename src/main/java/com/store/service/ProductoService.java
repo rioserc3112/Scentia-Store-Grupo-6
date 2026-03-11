@@ -50,10 +50,4 @@ public class ProductoService {
     public List<String> listarCategorias() {
         return productoRepository.findCategoriasActivas();
     }
-
-    public boolean hayStockSuficiente(Long productoId, int cantidad) {
-        return productoRepository.findById(productoId)
-                .map(p -> p.isDisponibleParaCompra() && p.getStock() >= cantidad)
-                .orElse(false);
-    }
 }
