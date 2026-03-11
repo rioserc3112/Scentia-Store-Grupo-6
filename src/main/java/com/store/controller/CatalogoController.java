@@ -27,10 +27,6 @@ public class CatalogoController {
         this.carritoService = carritoService;
     }
 
-    /**
-     * HU-03 / HU-04 — Muestra el catálogo de perfumes con filtros opcionales.
-     * GET /catalogo  o  GET /catalogo?categoria=X  o  GET /catalogo?buscar=Y
-     */
     @GetMapping
     public String listado(
             @RequestParam(required = false) String categoria,
@@ -38,7 +34,6 @@ public class CatalogoController {
             HttpSession session,
             Model model) {
 
-        // Productos
         if (buscar != null && !buscar.isBlank()) {
             model.addAttribute("productos", productoService.buscar(buscar));
             model.addAttribute("buscar", buscar);
@@ -49,10 +44,8 @@ public class CatalogoController {
             model.addAttribute("productos", productoService.listarCatalogo());
         }
 
-        // Filtros para la vista
         model.addAttribute("categorias", productoService.listarCategorias());
 
-        // Cantidad de ítems en carrito para el badge del navbar
         Carrito carrito = carritoService.obtenerCarrito(session);
         model.addAttribute("cantidadCarrito", carrito.getCantidadTotal());
 

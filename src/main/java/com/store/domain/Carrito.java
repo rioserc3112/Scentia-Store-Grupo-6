@@ -17,11 +17,6 @@ public class Carrito implements Serializable {
 
     private List<CarritoItem> items = new ArrayList<>();
 
-    // ─── Business methods ───────────────────────────────────────────────────────
-
-    /**
-     * Busca un ítem en el carrito por productoId.
-     */
     public Optional<CarritoItem> buscarItem(Long productoId) {
         return items.stream()
                 .filter(i -> i.getProductoId().equals(productoId))
@@ -93,8 +88,6 @@ public class Carrito implements Serializable {
     public int getCantidadTotal() {
         return items.stream().mapToInt(CarritoItem::getCantidad).sum();
     }
-
-    // ─── Getters & Setters ──────────────────────────────────────────────────────
 
     public List<CarritoItem> getItems() { return items; }
     public void setItems(List<CarritoItem> items) { this.items = items; }
