@@ -14,9 +14,8 @@
     </a>
 
     <!-- Toggler mobile -->
-    <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navbarMain"
-            aria-controls="navbarMain" aria-expanded="false" aria-label="Menú">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+      aria-controls="navbarMain" aria-expanded="false" aria-label="Menú">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -31,8 +30,8 @@
       <a th:href="@{/carrito}" class="btn btn-outline-warning btn-sm position-relative">
         🛒 Carrito
         <span th:if="${cantidadCarrito != null and cantidadCarrito > 0}"
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-              th:text="${cantidadCarrito}">0</span>
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+          th:text="${cantidadCarrito}">0</span>
       </a>
     </div>
 

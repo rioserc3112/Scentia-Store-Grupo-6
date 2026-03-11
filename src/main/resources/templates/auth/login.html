@@ -1,68 +1,75 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Iniciar sesión — Scentia Store</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iniciar sesión — Scentia Store</title>
 
-<link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
 
-<style>
-body { background-color:#f8f5f0; }
-.section-title { font-family: Georgia, serif; }
-</style>
+    <style>
+        body {
+            background-color: #f8f5f0;
+        }
+
+        .section-title {
+            font-family: Georgia, serif;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container py-5">
+    <div class="container py-5">
 
-<div class="row justify-content-center">
-<div class="col-md-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
 
-<div class="card border-0 shadow-sm">
-<div class="card-body p-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
 
-<h1 class="h4 text-center section-title mb-4">
-Iniciar sesión
-</h1>
+                        <h1 class="h4 text-center section-title mb-4">
+                            Iniciar sesión
+                        </h1>
 
-<div th:if="${mensajeError}" class="alert alert-danger" th:text="${mensajeError}"></div>
-<div th:if="${mensajeExito}" class="alert alert-success" th:text="${mensajeExito}"></div>
+                        <div th:if="${mensajeError}" class="alert alert-danger" th:text="${mensajeError}"></div>
+                        <div th:if="${mensajeExito}" class="alert alert-success" th:text="${mensajeExito}"></div>
 
-<form th:action="@{/auth/login}" method="post">
+                        <form th:action="@{/auth/login}" method="post">
 
-<div class="mb-3">
-<label class="form-label">Correo electrónico</label>
-<input type="email" name="correo" class="form-control" required>
-</div>
+                            <div class="mb-3">
+                                <label class="form-label">Correo electrónico</label>
+                                <input type="email" name="correo" class="form-control" required>
+                            </div>
 
-<div class="mb-3">
-<label class="form-label">Contraseña</label>
-<input type="password" name="password" class="form-control" required>
-</div>
+                            <div class="mb-3">
+                                <label class="form-label">Contraseña</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
 
-<button type="submit" class="btn btn-dark w-100">
-Ingresar
-</button>
+                            <button type="submit" class="btn btn-dark w-100">
+                                Ingresar
+                            </button>
 
-</form>
+                        </form>
 
-<div class="text-center mt-3">
-<a th:href="@{/auth/registro}">
-¿No tienes cuenta? Regístrate
-</a>
-</div>
+                        <div class="text-center mt-3">
+                            <a th:href="@{/auth/registro}">
+                                ¿No tienes cuenta? Regístrate
+                            </a>
+                        </div>
 
-</div>
-</div>
+                    </div>
+                </div>
 
-</div>
-</div>
+            </div>
+        </div>
 
-</div>
+    </div>
 
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 </body>
+
 </html>
