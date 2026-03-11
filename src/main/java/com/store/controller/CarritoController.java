@@ -1,32 +1,27 @@
 package com.store.controller;
 
 import com.store.domain.Carrito;
+import com.store.domain.Pedido;
 import com.store.service.CarritoService;
+import com.store.service.PedidoService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author Emmanuel Rios
- */
-
 @Controller
 @RequestMapping("/carrito")
 public class CarritoController {
 
     private final CarritoService carritoService;
+    private final PedidoService pedidoService;
 
-    public CarritoController(CarritoService carritoService) {
+    public CarritoController(CarritoService carritoService, PedidoService pedidoService) {
         this.carritoService = carritoService;
+        this.pedidoService = pedidoService;
     }
 
-    /**
-     * HU-05 (vista carrito) — Muestra el contenido del carrito.
-     * GET /carrito
-     */
     @GetMapping
     public String verCarrito(HttpSession session, Model model) {
         Carrito carrito = carritoService.obtenerCarrito(session);
@@ -35,10 +30,6 @@ public class CarritoController {
         return "carrito/listado";
     }
 
-    /**
-     * HU-05 — Agrega un producto al carrito.
-     * POST /carrito/agregar
-     */
     @PostMapping("/agregar")
     public String agregar(
             @RequestParam Long productoId,
@@ -57,10 +48,6 @@ public class CarritoController {
         return "redirect:/catalogo";
     }
 
-    /**
-     * HU-06 — Modifica la cantidad de un producto en el carrito.
-     * POST /carrito/actualizar
-     */
     @PostMapping("/actualizar")
     public String actualizar(
             @RequestParam Long productoId,
@@ -79,10 +66,6 @@ public class CarritoController {
         return "redirect:/carrito";
     }
 
-    /**
-     * HU-07 — Elimina un producto del carrito.
-     * POST /carrito/eliminar
-     */
     @PostMapping("/eliminar")
     public String eliminar(
             @RequestParam Long productoId,
@@ -93,11 +76,7 @@ public class CarritoController {
         redirectAttributes.addFlashAttribute("mensajeExito", "Producto eliminado del carrito.");
         return "redirect:/carrito";
     }
-    
-     /**
-     * HU-11 — Confirmación visual del pedido.
-     * POST /carrito/confirmar
-     */
+
     @PostMapping("/confirmar")
     public String confirmarPedido(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         Carrito carrito = carritoService.obtenerCarrito(session);
@@ -107,7 +86,11 @@ public class CarritoController {
             return "redirect:/carrito";
         }
 
-        model.addAttribute("total", carrito.getTotal());
+        Pedido pedidoGuardado = pedidoService.crearPedidoDesdeCarrito(carrito);
+
+        model.addAttribute("pedido", pedidoGuardado);
+        model.addAttribute("total", pedidoGuardado.getTotal());
+
         carritoService.vaciar(session);
 
         return "pedido/confirmacion";

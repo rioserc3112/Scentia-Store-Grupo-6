@@ -11,7 +11,7 @@ public enum DisponibilidadStock {
     AGOTADO("Agotado", "danger");
 
     private final String etiqueta;
-    private final String cssColor; // Bootstrap color class suffix
+    private final String cssColor; 
 
     DisponibilidadStock(String etiqueta, String cssColor) {
         this.etiqueta = etiqueta;

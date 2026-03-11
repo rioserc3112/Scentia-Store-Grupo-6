@@ -21,22 +21,15 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
      */
     List<Producto> findByActivoTrueOrderByNombreAsc();
 
-    /**
-     * Lista productos activos filtrados por categoría.
-     */
+
     List<Producto> findByActivoTrueAndCategoriaIgnoreCaseOrderByNombreAsc(String categoria);
 
-    /**
-     * Búsqueda por nombre o marca (catálogo con filtro).
-     */
+
     @Query("SELECT p FROM Producto p WHERE p.activo = true AND " +
            "(LOWER(p.nombre) LIKE LOWER(CONCAT('%', :termino, '%')) OR " +
            " LOWER(p.marca)  LIKE LOWER(CONCAT('%', :termino, '%')))")
     List<Producto> buscarPorNombreOMarca(@Param("termino") String termino);
 
-    /**
-     * Obtiene categorías distintas de productos activos (para filtro en catálogo).
-     */
     @Query("SELECT DISTINCT p.categoria FROM Producto p WHERE p.activo = true AND p.categoria IS NOT NULL ORDER BY p.categoria")
     List<String> findCategoriasActivas();
     

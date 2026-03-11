@@ -21,8 +21,6 @@ public class CarritoItem implements Serializable {
     private Integer cantidad;
     private String imagenUrl;
 
-    // ─── Constructors ───────────────────────────────────────────────────────────
-
     public CarritoItem() {}
 
     public CarritoItem(Producto producto, int cantidad) {
@@ -35,14 +33,10 @@ public class CarritoItem implements Serializable {
         this.imagenUrl = producto.getImagenUrl();
     }
 
-    // ─── Business methods ───────────────────────────────────────────────────────
-
     public BigDecimal getSubtotal() {
         if (precioUnitario == null || cantidad == null) return BigDecimal.ZERO;
         return precioUnitario.multiply(BigDecimal.valueOf(cantidad));
     }
-
-    // ─── Getters & Setters ──────────────────────────────────────────────────────
 
     public Long getProductoId() { return productoId; }
     public void setProductoId(Long productoId) { this.productoId = productoId; }
