@@ -75,7 +75,8 @@ public class PedidoService {
             detalle.setPedido(pedido);
             detalle.setProducto(producto);
             detalle.setCantidad(item.getCantidad());
-            detalle.setPrecio(item.getPrecioUnitario());
+            detalle.setPrecioUnitario(item.getPrecioUnitario());
+            detalle.setSubtotal(item.getSubtotal());
 
             detalles.add(detalle);
         }

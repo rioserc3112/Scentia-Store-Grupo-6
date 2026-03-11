@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import lombok.Data;
 
-@Data
 @Entity
 @Table(name = "pedido")
 public class Pedido implements Serializable {
@@ -29,4 +27,44 @@ public class Pedido implements Serializable {
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
     private List<PedidoDetalle> detalles;
+
+    public Integer getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Integer idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public EstadoPedido getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPedido estado) {
+        this.estado = estado;
+    }
+
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
+    public List<PedidoDetalle> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<PedidoDetalle> detalles) {
+        this.detalles = detalles;
+    }
 }
