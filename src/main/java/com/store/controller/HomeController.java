@@ -8,6 +8,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String inicio() {
-        return "redirect:/auth/login";
+        return "redirect:/catalogo";
+
     }
 }

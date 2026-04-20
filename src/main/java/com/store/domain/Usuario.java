@@ -20,7 +20,15 @@ public class Usuario {
     private String password;
 
     @Column(nullable = false, length = 20)
-    private String rol = "USER"; // USER o ADMIN
+    private String rol = "USER";
+
+    /* PENDIENTE: descomentar cuando existan columnas activo/token en BD
+    @Column(nullable = false)
+    private boolean activo = true;
+
+    @Column(length = 64)
+    private String token;
+    */
 
     public Usuario() {
     }
@@ -67,4 +75,22 @@ public class Usuario {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    /* PENDIENTE: descomentar cuando existan columnas activo/token en BD
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+    */
 }

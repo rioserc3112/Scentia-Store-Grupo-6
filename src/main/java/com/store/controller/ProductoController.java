@@ -1,10 +1,8 @@
 package com.store.controller;
 
 import com.store.domain.Producto;
-import com.store.domain.Usuario;
 import com.store.service.FirebaseStorageService;
 import com.store.service.ProductoService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import java.util.Locale;
 import org.springframework.context.MessageSource;
@@ -23,67 +21,58 @@ public class ProductoController {
     private final MessageSource messageSource;
     private final FirebaseStorageService firebaseStorageService;
 
-    public ProductoController(ProductoService productoService,
-                              MessageSource messageSource,
+    public ProductoController(ProductoService productoService, 
+                              MessageSource messageSource, 
                               FirebaseStorageService firebaseStorageService) {
         this.productoService = productoService;
         this.messageSource = messageSource;
         this.firebaseStorageService = firebaseStorageService;
     }
 
-    private boolean esAdmin(HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-        return usuario != null && "ADMIN".equalsIgnoreCase(usuario.getRol());
-    }
-
     @GetMapping("/listado")
-    public String listado(Model model, HttpSession session) {
-        if (!esAdmin(session)) {
-            return "redirect:/catalogo";
-        }
-
+    public String listado(Model model) {
         var productos = productoService.getProductos(false);
         model.addAttribute("productos", productos);
         model.addAttribute("totalProductos", productos.size());
+        // Objeto para el formulario de agregar nuevo
         model.addAttribute("producto", new Producto());
         return "/producto/listado";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@Valid @ModelAttribute("producto") Producto producto,
+    public String guardar(@Valid @ModelAttribute("producto") Producto producto, 
                           BindingResult result,
-                          @RequestParam("imagenFile") MultipartFile imagenFile,
+                          @RequestParam("imagenFile") MultipartFile imagenFile, 
                           RedirectAttributes redirectAttributes,
-                          Model model,
-                          HttpSession session) {
-
-        if (!esAdmin(session)) {
-            return "redirect:/catalogo";
-        }
-
+                          Model model) {
+        
+        // 1. Validar errores de anotaciones (NotNull, Min, etc.)
         if (result.hasErrors()) {
             var productos = productoService.getProductos(false);
             model.addAttribute("productos", productos);
-            model.addAttribute("totalProductos", productos.size());
             return "/producto/listado";
         }
 
         try {
+            // 2. Guardar primero para asegurar que tenemos un ID (necesario para el nombre de la imagen)
             productoService.save(producto);
 
+            // 3. Si hay una imagen, subirla a Firebase
             if (imagenFile != null && !imagenFile.isEmpty()) {
+                // Usamos el ID del producto recién guardado y la carpeta "productos"
                 String url = firebaseStorageService.uploadImage(
-                        imagenFile,
-                        "productos",
-                        producto.getId().intValue()
+                        imagenFile, 
+                        "productos", 
+                        producto.getId().intValue() // Convertimos Long a Integer para tu firma de método
                 );
-
+                
+                // 4. Actualizar el producto con la URL de la imagen y guardar de nuevo
                 producto.setImagenUrl(url);
                 productoService.save(producto);
             }
 
-            redirectAttributes.addFlashAttribute("todoOk",
-                    messageSource.getMessage("mensaje.actualizado", null, Locale.getDefault()));
+            redirectAttributes.addFlashAttribute("todoOk", 
+                messageSource.getMessage("mensaje.actualizado", null, Locale.getDefault()));
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error al procesar el producto: " + e.getMessage());
@@ -93,33 +82,20 @@ public class ProductoController {
     }
 
     @PostMapping("/eliminar")
-    public String eliminar(@RequestParam("idProducto") Long idProducto,
-                           RedirectAttributes redirectAttributes,
-                           HttpSession session) {
-
-        if (!esAdmin(session)) {
-            return "redirect:/catalogo";
-        }
-
-        try {
-            productoService.delete(idProducto);
-            redirectAttributes.addFlashAttribute("todoOk",
-                    messageSource.getMessage("mensaje.eliminado", null, Locale.getDefault()));
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "No se puede eliminar: tiene datos asociados.");
-        }
-        return "redirect:/producto/listado";
+public String eliminar(@RequestParam("idProducto") Long idProducto, 
+                       RedirectAttributes redirectAttributes) {
+    try {
+        productoService.delete(idProducto);
+        redirectAttributes.addFlashAttribute("todoOk", 
+            messageSource.getMessage("mensaje.eliminado", null, Locale.getDefault()));
+    } catch (Exception e) {
+        redirectAttributes.addFlashAttribute("error", "No se puede eliminar: tiene datos asociados.");
     }
+    return "redirect:/producto/listado";
+}
 
     @GetMapping("/modificar/{idProducto}")
-    public String modificar(@PathVariable("idProducto") Long idProducto,
-                            Model model,
-                            HttpSession session) {
-
-        if (!esAdmin(session)) {
-            return "redirect:/catalogo";
-        }
-
+    public String modificar(@PathVariable("idProducto") Long idProducto, Model model) {
         return productoService.getProducto(idProducto)
                 .map(p -> {
                     model.addAttribute("producto", p);

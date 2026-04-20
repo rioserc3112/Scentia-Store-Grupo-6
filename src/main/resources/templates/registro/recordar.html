@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{general/fragmentos :: head}"/>
+
+<body>
+
+<div class="d-flex align-items-center justify-content-center"
+     style="min-height:100vh; background: radial-gradient(ellipse at 60% 40%, #1a0030 0%, #000 70%);">
+
+    <div class="auth-card animate-in">
+
+        <div class="auth-header text-center">
+            <p class="label-xs mb-2" style="color:var(--purple-light);" th:text="#{aplicacion.titulo}">Scentia Store</p>
+            <h1 class="serif text-white" style="font-size:2rem;" th:text="#{registro.recordar.us}">Recuperar contraseña</h1>
+            <p class="small mt-2 mb-0" style="color:var(--text-muted);">
+                Recibirás un enlace en tu correo para restablecer tu contraseña
+            </p>
+        </div>
+
+        <div class="auth-body">
+
+            <div th:if="${mensajeExito}"
+                 class="mb-4 p-3 animate-in"
+                 style="background:rgba(39,174,96,0.08); border:1px solid rgba(39,174,96,0.3); color:#27ae60; font-size:0.85rem;">
+                <i class="fas fa-check-circle me-2"></i>
+                <span th:text="${mensajeExito}"></span>
+            </div>
+
+            <div th:if="${mensajeError}"
+                 class="mb-4 p-3 animate-in"
+                 style="background:rgba(231,76,60,0.08); border:1px solid rgba(231,76,60,0.3); color:#e74c3c; font-size:0.85rem;">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <span th:text="${mensajeError}"></span>
+            </div>
+
+            <form th:action="@{/registro/recordar}" method="post">
+
+                <div class="mb-5">
+                    <label class="label-xs d-block mb-2" th:text="#{usuario.correo}">Correo electrónico</label>
+                    <input type="email" name="correo" class="form-control-dark w-100"
+                           placeholder="tu@correo.com" required/>
+                </div>
+
+                <button type="submit" class="btn-luxury w-100">
+                    <span th:text="#{accion.recordar}">Enviar enlace</span>
+                    <i class="fas fa-envelope ms-2"></i>
+                </button>
+
+            </form>
+
+            <div class="text-center mt-4">
+                <a th:href="@{/login}"
+                   class="text-decoration-none small"
+                   style="color:var(--text-secondary);">
+                    ← <span th:text="#{login.login}">Volver al inicio de sesión</span>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -26,11 +26,6 @@ use scentia_store;
 -- Sección de Creación de Tablas
 -- -------------------------------
 
-INSERT INTO usuario (nombre, correo, password, rol)
-VALUES
-('Administrador', 'admin@scentia.com', '123', 'ADMIN'),
-('Cliente', 'cliente@scentia.com', '456', 'USER');
-
 -- 1. Tabla de Productos
 create table productos (
   id BIGINT NOT NULL AUTO_INCREMENT,

@@ -429,9 +429,11 @@
                         <li><a class="dropdown-item" href="#">Mi Perfil</a></li>
                         <li><hr class="dropdown-divider border-secondary"></li>
                         <li>
-                            <a class="dropdown-item" style="color: #e74c3c;" th:href="@{/}">
-                                <i class="fas fa-sign-out-alt me-2"></i> Salir
-                            </a>
+                            <form th:action="@{/logout}" method="post" class="d-inline">
+                                <button type="submit" class="dropdown-item" style="color:#e74c3c; background:none; border:none; padding:0.25rem 1rem; width:100%; text-align:left; cursor:pointer;">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Salir
+                                </button>
+                            </form>
                         </li>
                     </ul>
                 </li>

@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.claude/settings.local.json
+CLAUDE.md
+resumen-clase.md
+src/main/resources/firebase/scentia-store-b55d0-firebase-adminsdk-fbsvc-af659a5771.json

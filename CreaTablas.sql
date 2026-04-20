@@ -1,6 +1,42 @@
 -- ──────────────────────────────────────────────────────────────────────────────
--- Scentia Store — Datos de prueba para la tabla `productos`
--- Ejecutar en MySQL una vez que Hibernate haya creado la tabla (ddl-auto=update)
+-- Scentia Store — Script completo de inicialización
+-- ──────────────────────────────────────────────────────────────────────────────
+
+-- ══════════════════════════════════════════════════════════════════════════════
+-- PENDIENTE: descomentar y ejecutar cuando el usuario de BD tenga permisos DDL
+-- ══════════════════════════════════════════════════════════════════════════════
+-- -- Nuevas columnas en usuario (verificación de cuenta y recuperación de contraseña)
+-- ALTER TABLE usuario ADD COLUMN IF NOT EXISTS activo BIT NOT NULL DEFAULT 1;
+-- ALTER TABLE usuario ADD COLUMN IF NOT EXISTS token VARCHAR(64);
+--
+-- -- Tabla de rutas de seguridad dinámicas
+-- CREATE TABLE IF NOT EXISTS ruta (
+--     id     BIGINT       NOT NULL AUTO_INCREMENT,
+--     patron VARCHAR(150) NOT NULL,
+--     rol_name VARCHAR(50),
+--     PRIMARY KEY (id)
+-- );
+--
+-- -- Datos iniciales de rutas
+-- INSERT INTO ruta (patron, rol_name)
+-- SELECT * FROM (SELECT '/producto/**', 'ADMIN') AS tmp
+-- WHERE NOT EXISTS (SELECT 1 FROM ruta LIMIT 1);
+--
+-- INSERT INTO ruta (patron, rol_name)
+-- SELECT * FROM (SELECT '/catalogo/**', NULL) AS tmp
+-- WHERE NOT EXISTS (SELECT 1 FROM ruta WHERE patron = '/catalogo/**');
+--
+-- INSERT INTO ruta (patron, rol_name)
+-- SELECT * FROM (SELECT '/carrito/**', NULL) AS tmp
+-- WHERE NOT EXISTS (SELECT 1 FROM ruta WHERE patron = '/carrito/**');
+--
+-- INSERT INTO ruta (patron, rol_name)
+-- SELECT * FROM (SELECT '/pedido/**', NULL) AS tmp
+-- WHERE NOT EXISTS (SELECT 1 FROM ruta WHERE patron = '/pedido/**');
+-- ══════════════════════════════════════════════════════════════════════════════
+
+-- ──────────────────────────────────────────────────────────────────────────────
+-- Datos de prueba para la tabla `productos`
 -- ──────────────────────────────────────────────────────────────────────────────
 
 INSERT INTO productos (nombre, descripcion, precio, imagen_url, stock, categoria, presentacion, marca, activo)

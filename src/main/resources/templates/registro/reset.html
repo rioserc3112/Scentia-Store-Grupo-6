@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{general/fragmentos :: head}"/>
+
+<body>
+
+<div class="d-flex align-items-center justify-content-center"
+     style="min-height:100vh; background: radial-gradient(ellipse at 60% 40%, #1a0030 0%, #000 70%);">
+
+    <div class="auth-card animate-in">
+
+        <div class="auth-header text-center">
+            <p class="label-xs mb-2" style="color:var(--purple-light);" th:text="#{aplicacion.titulo}">Scentia Store</p>
+            <h1 class="serif text-white" style="font-size:2rem;">Nueva contraseña</h1>
+        </div>
+
+        <div class="auth-body">
+
+            <form th:action="@{/registro/reset}" method="post">
+                <input type="hidden" name="correo" th:value="${correo}"/>
+                <input type="hidden" name="token" th:value="${token}"/>
+
+                <div class="mb-5">
+                    <label class="label-xs d-block mb-2" th:text="#{usuario.password}">Nueva contraseña</label>
+                    <input type="password" name="password" class="form-control-dark w-100"
+                           placeholder="Mínimo 8 caracteres" required/>
+                </div>
+
+                <button type="submit" class="btn-luxury w-100">
+                    <span th:text="#{accion.guardar}">Guardar contraseña</span>
+                    <i class="fas fa-lock ms-2"></i>
+                </button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

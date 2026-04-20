@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head th:replace="~{general/fragmentos :: head}"/>
+
+<body>
+
+<header th:replace="~{general/fragmentos :: header}"/>
+
+<section class="py-5 d-flex align-items-center justify-content-center"
+         style="background:var(--bg-black); min-height:80vh;">
+    <div class="text-center animate-in" style="max-width:520px; width:100%; padding:0 1.5rem;">
+
+        <div class="mb-5">
+            <div class="mx-auto mb-4"
+                 style="width:80px; height:80px; border:1px solid rgba(231,76,60,0.4);
+                        display:flex; align-items:center; justify-content:center;">
+                <i class="fas fa-ban" style="font-size:2rem; color:#e74c3c;"></i>
+            </div>
+            <p class="label-xs mb-2" style="color:var(--purple-light);">403</p>
+            <h1 class="serif text-white mb-3" style="font-size:2.5rem;" th:text="#{e403.titulo}">Acceso denegado</h1>
+            <p style="color:var(--text-secondary);" th:text="#{e403.texto}">
+                No tiene permisos para ver esta página o ejecutar esta acción.
+            </p>
+        </div>
+
+        <a th:href="@{/catalogo}" class="btn-luxury">
+            <i class="fas fa-store me-2"></i> Ir al catálogo
+        </a>
+
+    </div>
+</section>
+
+<footer th:replace="~{general/fragmentos :: footer}"/>
+
+</body>
+</html>

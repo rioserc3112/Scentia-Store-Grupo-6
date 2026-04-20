@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -21,11 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoService {
 
     private final ProductoRepository productoRepository;
-    private final FirebaseStorageService firebaseStorageService;
 
-    public ProductoService(ProductoRepository productoRepository, FirebaseStorageService firebaseStorageService) {
+    public ProductoService(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
-        this.firebaseStorageService = firebaseStorageService;
     }
 
     public List<Producto> listarCatalogo() {

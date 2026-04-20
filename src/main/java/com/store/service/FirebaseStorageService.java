@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,15 +19,16 @@ public class FirebaseStorageService {
     private String bucketName;
     @Value("${firebase.storage.path}")
     private String storagePath;
-    // Aquí se manejaría la inyección del cliente de Storage como un bean
     private final Storage storage;
 
-    public FirebaseStorageService(Storage storage) {
-        this.storage = storage;
+    public FirebaseStorageService(Optional<Storage> storage) {
+        this.storage = storage.orElse(null);
     }
 
-    //Sube un archivo de imagen al almacenamiento de Firebase.    
     public String uploadImage(MultipartFile localFile, String folder, Integer id) throws IOException {
+        if (storage == null) {
+            throw new IllegalStateException("Firebase no está configurado (falta el archivo de credenciales).");
+        }
         String originalName = localFile.getOriginalFilename();
         String fileExtension = "";
         if (originalName != null && originalName.contains(".")) {
