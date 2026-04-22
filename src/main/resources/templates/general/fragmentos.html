@@ -1,10 +1,14 @@
-<head th:fragment="head" xmlns:th="http://www.thymeleaf.org">
+<!-- ═══════════════════════════════════════════════════════
+     FRAGMENTO: head  –  incluye en todas las páginas
+     ═══════════════════════════════════════════════════════ -->
+<head th:fragment="head">
     <title>Scentia Store</title>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16x16.png"/>
     <link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32x32.png"/>
 
+    <!-- Dependencias -->
     <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
     <link th:href="@{/css/estilos.css}" rel="stylesheet"/>
@@ -15,7 +19,11 @@
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/js/rutinas.js}"></script>
 
+    <!-- ═══════════════════════════════════════════
+         SISTEMA DE DISEÑO — SCENTIA LUXURY DARK
+         ═══════════════════════════════════════════ -->
     <style>
+        /* ── Variables ──────────────────────────────── */
         :root {
             --purple:        #9b59b6;
             --purple-light:  #c39bd3;
@@ -31,41 +39,359 @@
             --text-secondary:#888888;
             --text-muted:    #555555;
         }
-        body { background-color: var(--bg-black); color: var(--text-primary); font-family: 'Inter', sans-serif; font-weight: 300; min-height: 100vh; }
-        .serif { font-family: 'Playfair Display', serif; }
-        .label-xs { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); }
+
+        /* ── Base ───────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            min-height: 100vh;
+        }
+
+        /* ── Tipografía ─────────────────────────────── */
+        .serif          { font-family: 'Playfair Display', serif; }
+        .serif-italic   { font-family: 'Playfair Display', serif; font-style: italic; }
+        .label-xs       { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-secondary); }
         .display-luxury { font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: -2px; font-weight: 700; }
-        .btn-luxury { background: linear-gradient(135deg, var(--purple-dark), var(--purple)); color: #fff; border: none; border-radius: 0; font-weight: 600; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 12px 28px; transition: all 0.3s ease; }
-        .btn-luxury:hover { background: linear-gradient(135deg, var(--purple), var(--purple-light)); transform: translateY(-1px); box-shadow: 0 8px 25px var(--purple-glow); color: #fff; }
-        .btn-luxury-outline { background: transparent; color: var(--purple-light); border: 1px solid var(--border-purple); border-radius: 0; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; padding: 10px 24px; transition: all 0.3s; }
-        .navbar-luxury { background-color: var(--bg-black) !important; border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; }
-        .navbar-luxury .navbar-brand { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--text-primary) !important; }
-        .navbar-luxury .nav-link { color: var(--text-secondary) !important; font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 14px !important; }
-        .navbar-luxury .nav-link:hover { color: var(--text-primary) !important; }
-        .badge-carrito { background: var(--purple) !important; font-size: 0.55rem; }
-        .footer-luxury { background-color: var(--bg-black); border-top: 1px solid var(--border); }
-        .divider-luxury { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-        .toast-premium { background: var(--bg-card); border: 1px solid var(--border); border-radius: 0; min-width: 320px; color: var(--text-primary); }
+
+        /* ── Botones ────────────────────────────────── */
+        .btn-luxury {
+            background: linear-gradient(135deg, var(--purple-dark), var(--purple));
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 12px 28px;
+            transition: all 0.3s ease;
+        }
+        .btn-luxury:hover {
+            background: linear-gradient(135deg, var(--purple), var(--purple-light));
+            color: #fff;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px var(--purple-glow);
+        }
+
+        .btn-luxury-outline {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1px solid var(--border-purple);
+            border-radius: 0;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 24px;
+            transition: all 0.3s;
+        }
+        .btn-luxury-outline:hover {
+            background: var(--purple-glow);
+            color: #fff;
+            border-color: var(--purple);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            transition: color 0.2s;
+        }
+        .btn-ghost:hover { color: var(--text-primary); }
+
+        /* ── Acciones de texto en tabla ─────────────── */
+        .btn-text-action {
+            background: none;
+            border: none;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-text-edit  { color: var(--purple-light); border-bottom: 1px solid transparent; }
+        .btn-text-edit:hover  { color: #fff; border-bottom-color: var(--purple); }
+        .btn-text-delete { color: var(--text-muted); }
+        .btn-text-delete:hover { color: #e74c3c; }
+
+        /* ── Cards ──────────────────────────────────── */
+        .card-dark {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+        }
+        .card-dark:hover {
+            border-color: var(--border-purple);
+            box-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        /* ── Formularios ────────────────────────────── */
+        .form-control-dark,
+        .form-select-dark {
+            background-color: var(--bg-input) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text-primary) !important;
+            border-radius: 0 !important;
+            font-size: 0.9rem;
+            padding: 10px 14px;
+            transition: border-color 0.2s;
+        }
+        .form-control-dark:focus,
+        .form-select-dark:focus {
+            border-color: var(--purple) !important;
+            box-shadow: 0 0 0 3px var(--purple-glow) !important;
+            outline: none;
+        }
+        .form-control-dark::placeholder { color: var(--text-muted); }
+        .form-control-dark option { background-color: var(--bg-card); }
+
+        /* ── Tabla premium ──────────────────────────── */
+        .table-premium {
+            color: var(--text-primary);
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .table-premium thead tr {
+            border-bottom: 1px solid var(--border);
+        }
+        .table-premium thead th {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 500;
+            padding: 14px 16px;
+            background: transparent;
+            border: none;
+        }
+        .table-premium tbody tr {
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+        .table-premium tbody tr:hover { background: rgba(155, 89, 182, 0.04); }
+        .table-premium tbody td {
+            padding: 18px 16px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        /* ── Modales ────────────────────────────────── */
+        .modal-content {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            color: var(--text-primary);
+        }
+        .modal-header { border-bottom-color: var(--border); }
+        .modal-footer { border-top-color: var(--border); }
+
+        /* ── Toast ──────────────────────────────────── */
+        .toast-premium {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            min-width: 320px;
+            color: var(--text-primary);
+        }
+        .toast-premium .toast-header {
+            background: transparent;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-primary);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .toast-success { border-left: 3px solid #27ae60; }
+        .toast-error   { border-left: 3px solid #e74c3c; }
+        .btn-toast-close {
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            background: none;
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            cursor: pointer;
+        }
+
+        /* ── Navbar ─────────────────────────────────── */
+        .navbar-luxury {
+            background-color: var(--bg-black) !important;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+        }
+        .navbar-luxury .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--text-primary) !important;
+            letter-spacing: 1px;
+        }
+        .navbar-luxury .nav-link {
+            color: var(--text-secondary) !important;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+            padding: 6px 14px !important;
+        }
+        .navbar-luxury .nav-link:hover,
+        .navbar-luxury .nav-link.active { color: var(--text-primary) !important; }
+        .navbar-luxury .dropdown-menu {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+        }
+        .navbar-luxury .dropdown-item {
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 10px 20px;
+        }
+        .navbar-luxury .dropdown-item:hover {
+            background: var(--purple-glow);
+            color: var(--text-primary);
+        }
+        .badge-carrito {
+            background: var(--purple) !important;
+            font-size: 0.55rem;
+        }
+
+        /* ── Footer ─────────────────────────────────── */
+        .footer-luxury {
+            background-color: var(--bg-black);
+            border-top: 1px solid var(--border);
+        }
+        .footer-luxury a { transition: color 0.2s; }
+        .footer-luxury a:hover { color: var(--purple-light) !important; }
+
+        /* ── Badges de estado ───────────────────────── */
+        .badge-estado {
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 0;
+            font-weight: 500;
+        }
+        .badge-pendiente  { background: rgba(241, 196, 15, 0.15); color: #f1c40f; border: 1px solid rgba(241,196,15,0.3); }
+        .badge-pagado     { background: rgba(39, 174, 96, 0.15);  color: #27ae60; border: 1px solid rgba(39,174,96,0.3); }
+        .badge-cancelado  { background: rgba(231, 76, 60, 0.15);  color: #e74c3c; border: 1px solid rgba(231,76,60,0.3); }
+        .badge-disponible { background: rgba(39, 174, 96, 0.12);  color: #2ecc71; border: 1px solid rgba(46,204,113,0.3); }
+        .badge-poco_stock { background: rgba(241,196,15,0.12);    color: #f39c12; border: 1px solid rgba(243,156,18,0.3); }
+        .badge-agotado    { background: rgba(231,76,60,0.12);     color: #e74c3c; border: 1px solid rgba(231,76,60,0.3); }
+
+        /* ── Card de catálogo ───────────────────────── */
+        .card-producto {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            transition: all 0.3s;
+        }
+        .card-producto:hover {
+            border-color: var(--border-purple);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--purple-glow);
+        }
+        .card-producto .card-img-top {
+            height: 240px;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: filter 0.3s;
+        }
+        .card-producto:hover .card-img-top { filter: brightness(1); }
+
+        /* ── Divider ────────────────────────────────── */
+        .divider-luxury {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 2rem 0;
+        }
+
+        /* ── Auth card ──────────────────────────────── */
+        .auth-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            max-width: 440px;
+            width: 100%;
+        }
+        .auth-card .auth-header {
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 2rem 1.5rem;
+        }
+        .auth-card .auth-body { padding: 2rem; }
+
+        /* ── Imagen de producto ─────────────────────── */
+        .img-product-sharp {
+            object-fit: cover;
+            filter: brightness(0.85);
+            transition: filter 0.2s;
+        }
+        .img-product-sharp:hover { filter: brightness(1); }
+
+        /* ── Resumen carrito ────────────────────────── */
+        .resumen-luxury {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0;
+            position: sticky;
+            top: 2rem;
+        }
+        .resumen-total-line {
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* ── Animaciones ────────────────────────────── */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-in { animation: fadeIn 0.4s ease forwards; }
+
+        /* ── Scrollbar ──────────────────────────────── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-black); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--purple-dark); }
     </style>
 </head>
 
 
+<!-- ═══════════════════════════════════════════════════════
+     FRAGMENTO: header  –  navbar de navegación
+     ═══════════════════════════════════════════════════════ -->
 <nav th:fragment="header"
      class="navbar navbar-expand-lg navbar-luxury"
      xmlns:th="http://www.thymeleaf.org"
-     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div class="container-fluid px-4">
 
+        <!-- Marca -->
         <a class="navbar-brand serif" th:href="@{/catalogo}">Scentia</a>
 
+        <!-- Toggler móvil -->
         <button class="navbar-toggler border-0" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Menú">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
-                <li class="nav-item"><a class="nav-link" th:href="@{/catalogo}">Catálogo</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/catalogo}">Catálogo</a>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link position-relative" th:href="@{/carrito}">
                         <i class="fas fa-shopping-bag me-1"></i> Carrito
@@ -74,26 +400,37 @@
                               th:text="${cantidadCarrito}">0</span>
                     </a>
                 </li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/pedido/listado}">Pedidos</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
 
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pedido/listado}">Pedidos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacto</a>
+                </li>
+
+                <!-- Admin -->
                 <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <a class="nav-link text-danger" th:href="@{/producto/listado}">
+                    <a class="nav-link" th:href="@{/producto/listado}">
                         <i class="fas fa-sliders-h me-1"></i> Admin
                     </a>
                 </li>
+
             </ul>
 
-            <ul class="navbar-nav ms-auto">
+            <!-- Cuenta -->
+            <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item" sec:authorize="isAnonymous()">
-                    <a class="nav-link" th:href="@{/auth/login}">
+                    <a class="nav-link" th:href="@{/login}">
                         <i class="fas fa-sign-in-alt me-1"></i> INICIAR SESIÓN
                     </a>
                 </li>
 
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="post" id="formLogoutNav" style="display: none;"></form>
-                    <a class="nav-link" href="javascript:void(0)" onclick="document.getElementById('formLogoutNav').submit();" style="color: var(--purple-light) !important;">
+                    <a class="nav-link" href="javascript:void(0)"
+                       onclick="document.getElementById('formLogoutNav').submit();"
+                       style="color: var(--purple-light) !important;">
                         <i class="fas fa-sign-out-alt me-1"></i> CERRAR SESIÓN
                     </a>
                 </li>
@@ -103,11 +440,16 @@
 </nav>
 
 
+<!-- ═══════════════════════════════════════════════════════
+     FRAGMENTO: footer
+     ═══════════════════════════════════════════════════════ -->
 <footer th:fragment="footer"
         class="footer-luxury text-white pt-5 pb-4"
         xmlns:th="http://www.thymeleaf.org">
     <div class="container">
         <div class="row g-5">
+
+            <!-- Marca y contacto -->
             <div class="col-12 col-md-4">
                 <h5 class="serif mb-3" style="font-size:1.5rem;">Scentia Store</h5>
                 <p class="small" style="color:var(--text-secondary); line-height:1.8;">
@@ -118,68 +460,141 @@
                     <i class="fas fa-map-marker-alt me-2" style="color:var(--purple);"></i>
                     Av. Central, Calles 3 y 5, San José
                 </p>
+                <p class="small mb-1" style="color:var(--text-secondary);">
+                    <i class="fas fa-phone me-2" style="color:var(--purple);"></i>
+                    <a href="tel:+50622562222" class="text-decoration-none" style="color:var(--text-secondary);">+506 2256-2222</a>
+                </p>
+                <p class="small" style="color:var(--text-secondary);">
+                    <i class="fas fa-envelope me-2" style="color:var(--purple);"></i>
+                    <a href="mailto:hola@scentia.com" class="text-decoration-none" style="color:var(--text-secondary);">hola@scentia.com</a>
+                </p>
             </div>
+
+            <!-- Tienda -->
             <div class="col-6 col-md-2">
                 <p class="label-xs mb-3">Tienda</p>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a th:href="@{/catalogo}" class="text-decoration-none small" style="color:var(--text-secondary);">Catálogo</a></li>
                     <li class="mb-2"><a th:href="@{/carrito}" class="text-decoration-none small" style="color:var(--text-secondary);">Mi carrito</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Sobre nosotros</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Preguntas frecuentes</a></li>
                 </ul>
             </div>
+
+            <!-- Soporte -->
             <div class="col-6 col-md-2">
                 <p class="label-xs mb-3">Soporte</p>
                 <ul class="list-unstyled mb-0">
                     <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Envíos</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Devoluciones</a></li>
                     <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Garantía</a></li>
+                    <li class="mb-2"><a href="#" class="text-decoration-none small" style="color:var(--text-secondary);">Contacto</a></li>
                 </ul>
             </div>
+
+            <!-- Redes -->
             <div class="col-12 col-md-4">
                 <p class="label-xs mb-3">Síguenos</p>
                 <div class="d-flex gap-3 mb-4">
-                    <a href="#" style="color:var(--text-secondary);"><i class="fab fa-instagram"></i></a>
-                    <a href="#" style="color:var(--text-secondary);"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color:var(--text-secondary); font-size:1.1rem;" class="text-decoration-none"><i class="fab fa-instagram"></i></a>
+                    <a href="#" style="color:var(--text-secondary); font-size:1.1rem;" class="text-decoration-none"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" style="color:var(--text-secondary); font-size:1.1rem;" class="text-decoration-none"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color:var(--text-secondary); font-size:1.1rem;" class="text-decoration-none"><i class="fab fa-youtube"></i></a>
                 </div>
-                <p class="small" style="color:var(--text-muted);">Suscríbete para lanzamientos exclusivos.</p>
+                <p class="small" style="color:var(--text-muted);">
+                    Suscríbete a nuestro newsletter para recibir lanzamientos exclusivos.
+                </p>
             </div>
+
         </div>
+
         <hr class="divider-luxury mt-5"/>
-        <div class="row">
+
+        <div class="row align-items-center">
             <div class="col-md-6">
-                <p class="small mb-0" style="color:var(--text-muted);">© 2026 Scentia Store — Todos los derechos reservados.</p>
+                <p class="small mb-0" style="color:var(--text-muted);">
+                    © 2026 Scentia Store — <span th:text="#{plantilla.derechos}">Todos los derechos reservados.</span>
+                </p>
+            </div>
+            <div class="col-md-6 text-md-end mt-2 mt-md-0">
+                <a href="#" class="text-decoration-none me-3 small" style="color:var(--text-muted);">Política de privacidad</a>
+                <a href="#" class="text-decoration-none me-3 small" style="color:var(--text-muted);">Términos de servicio</a>
+                <a href="#" class="text-decoration-none small" style="color:var(--text-muted);">Cookies</a>
             </div>
         </div>
     </div>
 </footer>
 
+
+<!-- ═══════════════════════════════════════════════════════
+     FRAGMENTO: mostrarToast  –  mensajes de feedback
+     ═══════════════════════════════════════════════════════ -->
 <section th:fragment="mostrarToast" xmlns:th="http://www.thymeleaf.org">
-    <div aria-live="polite" aria-atomic="true" class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999;">
-        <div th:if="${error}" class="toast show toast-premium border-danger">
+    <div aria-live="polite" aria-atomic="true"
+         class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999;">
+
+        <div th:if="${error}"
+             class="toast show toast-premium toast-error animate-in"
+             role="alert" aria-live="assertive" data-bs-autohide="true" data-bs-delay="5000">
             <div class="toast-header">
-                <strong class="me-auto text-danger">ERROR</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                <i class="fas fa-circle-exclamation me-2" style="color:#e74c3c;"></i>
+                <span class="flex-grow-1">[[#{error}]]</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
             </div>
-            <div class="toast-body" th:text="${error}"></div>
+            <div class="toast-body py-3">
+                <p class="mb-3 text-secondary small">[[${error}]]</p>
+                <div class="text-end">
+                    <button type="button" class="btn-toast-close" data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
+            </div>
         </div>
-        <div th:if="${todoOk}" class="toast show toast-premium border-success">
+
+        <div th:if="${todoOk}"
+             class="toast show toast-premium toast-success animate-in"
+             role="status" aria-live="polite" data-bs-autohide="true" data-bs-delay="5000">
             <div class="toast-header">
-                <strong class="me-auto text-success">ÉXITO</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+                <i class="fas fa-circle-check me-2" style="color:#27ae60;"></i>
+                <span class="flex-grow-1">[[#{atencion}]]</span>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
             </div>
-            <div class="toast-body" th:text="${todoOk}"></div>
+            <div class="toast-body py-3">
+                <p class="mb-3 text-secondary small">[[${todoOk}]]</p>
+                <div class="text-end">
+                    <button type="button" class="btn-toast-close" data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                </div>
+            </div>
         </div>
+
     </div>
 </section>
 
-<section th:fragment="explorar" class="py-5 text-white text-center" style="background: linear-gradient(180deg, #0a0a0a 0%, #0d0010 100%);" xmlns:th="http://www.thymeleaf.org">
+
+<!-- ═══════════════════════════════════════════════════════
+     FRAGMENTO: explorar  –  CTA sección inferior
+     ═══════════════════════════════════════════════════════ -->
+<section th:fragment="explorar"
+         class="py-5 text-white text-center"
+         style="background: linear-gradient(180deg, #0a0a0a 0%, #0d0010 100%);"
+         xmlns:th="http://www.thymeleaf.org">
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-4">
             <div class="col-md-7">
                 <p class="label-xs mb-3" style="color:var(--purple-light);">Scentia Store</p>
                 <h2 class="serif display-luxury mb-3">¿Listo para completar tu pedido?</h2>
-                <div class="d-flex justify-content-center gap-3 mt-5">
+                <p class="mb-5" style="color:var(--text-secondary);">
+                    Tienes todo lo que necesitas. Procede al pago o sigue explorando nuestras fragancias.
+                </p>
+                <div class="d-flex justify-content-center gap-3">
                     <a th:href="@{/carrito}" class="btn-luxury">Finalizar compra</a>
                     <a th:href="@{/catalogo}" class="btn-luxury-outline">Explorar más</a>
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-9">
+                <img src="https://hips.hearstapps.com/hmg-prod/images/los-mejores-perfumes-de-oton-o-para-hombre-esquire-1604414321.jpg?crop=0.8888101146165663xw:1xh;center,top&resize=1200:*"
+                     class="img-fluid" style="filter:brightness(0.7); border: 1px solid var(--border);"
+                     alt="Fragancias Scentia Store"/>
             </div>
         </div>
     </div>

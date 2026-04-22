@@ -37,7 +37,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> {
             // 1. RUTAS SIEMPRE PÚBLICAS
             auth.requestMatchers(
-                "/auth/**", "/acceso_denegado", "/login",
+                "/registro/**", "/acceso_denegado", "/login",
                 "/css/**", "/js/**", "/images/**", "/webjars/**"
             ).permitAll();
 
@@ -64,7 +64,7 @@ public class SecurityConfig {
         });
 
         http.formLogin(form -> form
-            .loginPage("/auth/login")
+            .loginPage("/login")
             .loginProcessingUrl("/login") // Spring Security escucha este POST
             .defaultSuccessUrl("/catalogo", true)
             .permitAll()
@@ -72,7 +72,7 @@ public class SecurityConfig {
 
         http.logout(logout -> logout
             .logoutUrl("/logout")
-            .logoutSuccessUrl("/auth/login?logout=true")
+            .logoutSuccessUrl("/login?logout=true")
             .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID")
             .permitAll()
