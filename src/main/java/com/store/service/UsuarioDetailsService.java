@@ -23,11 +23,8 @@ public class UsuarioDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
-        // PENDIENTE: revertir a findByCorreoAndActivoTrue cuando exista columna activo en BD
-        // Usuario usuario = usuarioRepository.findByCorreoAndActivoTrue(correo)
-        //         .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado o inactivo: " + correo));
-        Usuario usuario = usuarioRepository.findByCorreo(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + correo));
+        Usuario usuario = usuarioRepository.findByCorreoAndActivoTrue(correo)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado o inactivo: " + correo));
 
         return new User(
                 usuario.getCorreo(),

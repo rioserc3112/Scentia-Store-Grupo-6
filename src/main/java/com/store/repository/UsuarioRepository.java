@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByCorreo(String correo);
-    // PENDIENTE: descomentar cuando existan columnas activo/token en BD
-    // Optional<Usuario> findByCorreoAndActivoTrue(String correo);
-    // Optional<Usuario> findByToken(String token);
+    Optional<Usuario> findByCorreoAndActivoTrue(String correo);
+    Optional<Usuario> findByToken(String token);
     boolean existsByCorreo(String correo);
 }

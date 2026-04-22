@@ -56,6 +56,14 @@ CREATE TABLE usuario (
   UNIQUE KEY (correo)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
+-- 3. Tabla de Rutas de seguridad dinámicas
+CREATE TABLE IF NOT EXISTS ruta (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  patron VARCHAR(150) NOT NULL,
+  rol_name VARCHAR(50),
+  PRIMARY KEY (id)
+) ENGINE = InnoDB;
+
 CREATE TABLE pedido(
   id_pedido INT AUTO_INCREMENT PRIMARY KEY,
   estado VARCHAR(20),
@@ -77,6 +85,12 @@ CREATE TABLE pedido_detalle(
 -- Sección de Inserción de Datos
 -- -------------------------------
     
+INSERT INTO ruta (patron, rol_name) VALUES
+    ('/producto/**', 'ADMIN'),
+    ('/catalogo/**', NULL),
+    ('/carrito/**', NULL),
+    ('/pedido/**', NULL);
+
 INSERT INTO productos
 (nombre, descripcion, precio, imagen_url, stock, categoria, presentacion, marca, activo)
 VALUES

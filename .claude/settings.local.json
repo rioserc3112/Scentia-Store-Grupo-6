@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\borrador\\\\Scentia-Store-Grupo-6\\\\CreaTablas.sql'\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem -Path 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\borrador' -Recurse | Select-Object FullName\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\CreaTablas.sql'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\pom.xml'\")",
+      "Bash(powershell.exe -Command \"Get-ChildItem -Path 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src' -Recurse | Select-Object FullName\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\templates\\\\auth\\\\login.html'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\SecurityConfig.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\templates\\\\carrito\\\\listado.html'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\templates\\\\pedido\\\\confirmacion.html'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\messages.properties'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\domain\\\\Usuario.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\UsuarioDetailsService.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\AuthController.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\UsuarioService.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\ProductoService.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\CarritoService.java'; Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\PedidoService.java'; Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\service\\\\FirebaseStorageService.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\CatalogoController.java'; echo '---'; Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\CarritoController.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\PedidoController.java'; echo '---'; Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\ProductoController.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\ProjectConfig.java'\")",
+      "Bash(powershell.exe -Command \"Remove-Item 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\java\\\\com\\\\store\\\\controller\\\\AuthController.java'\")",
+      "Bash(powershell.exe -Command \"Get-Content 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\application.properties'\")",
+      "Bash(powershell.exe -Command \"New-Item -ItemType Directory -Force -Path 'C:\\\\Users\\\\emma3\\\\Documents\\\\Programacion\\\\Scentia-Store-Grupo-6\\\\src\\\\main\\\\resources\\\\templates\\\\registro'\")"
+    ]
+  }
+}

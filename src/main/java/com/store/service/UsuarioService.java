@@ -3,7 +3,7 @@ package com.store.service;
 import com.store.domain.Usuario;
 import com.store.repository.UsuarioRepository;
 import java.util.Optional;
-// PENDIENTE: import java.util.UUID;
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +13,13 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
-    // PENDIENTE: private final CorreoService correoService;
+    private final CorreoService correoService;
 
     public UsuarioService(UsuarioRepository usuarioRepository,
-            PasswordEncoder passwordEncoder/* PENDIENTE: , CorreoService correoService */) {
+            PasswordEncoder passwordEncoder, CorreoService correoService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
-        // PENDIENTE: this.correoService = correoService;
+        this.correoService = correoService;
     }
 
     @Transactional
@@ -38,23 +38,20 @@ public class UsuarioService {
         }
 
         Usuario usuario = new Usuario(nombre, correo, passwordEncoder.encode(password), "USER");
-        usuarioRepository.save(usuario);
-
-        /* PENDIENTE: descomentar cuando existan columnas activo/token en BD
         String token = UUID.randomUUID().toString();
         usuario.setActivo(false);
         usuario.setToken(token);
+        usuarioRepository.save(usuario);
+
         try {
             correoService.enviarActivacion(correo, nombre, token);
         } catch (Exception e) {
             // Si el correo falla, el usuario queda registrado pero inactivo
         }
-        */
 
         return null;
     }
 
-    /* PENDIENTE: descomentar cuando existan columnas activo/token en BD
     @Transactional
     public boolean activarCuenta(String correo, String token) {
         Optional<Usuario> opt = usuarioRepository.findByCorreo(correo);
@@ -101,16 +98,6 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
         return true;
     }
-    */
-
-    @Transactional
-    public boolean activarCuenta(String correo, String token) { return false; }
-
-    @Transactional
-    public boolean enviarRecordatorio(String correo) { return false; }
-
-    @Transactional
-    public boolean resetearPassword(String correo, String token, String nuevaPassword) { return false; }
 
     public Optional<Usuario> buscarPorCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo);
