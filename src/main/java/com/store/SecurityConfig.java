@@ -6,12 +6,12 @@ import com.store.service.UsuarioDetailsService;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 public class SecurityConfig {
@@ -31,74 +31,55 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    // Requerido para que maximumSessions funcione correctamente
     @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, RutaService rutaService) throws Exception {
-
-        final List<Ruta> rutas;
-        List<Ruta> rutasTemp;
-        try {
-            rutasTemp = rutaService.getRutas();
-        } catch (Exception e) {
-            rutasTemp = List.of();
-        }
-        rutas = rutasTemp;
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, @Lazy RutaService rutaService) throws Exception {
 
         http.authorizeHttpRequests(auth -> {
-            // Recursos estáticos y rutas de autenticación siempre públicos
+            // 1. RUTAS SIEMPRE PÚBLICAS
             auth.requestMatchers(
-                "/login", "/registro/**", "/acceso_denegado",
+                "/auth/**", "/acceso_denegado", "/login",
                 "/css/**", "/js/**", "/images/**", "/webjars/**"
             ).permitAll();
 
-            if (rutas.isEmpty()) {
-                // Fallback en primer arranque (antes de que InicializadorDatos siembre la BD)
-                auth.requestMatchers("/producto/**").hasRole("ADMIN");
-            } else {
-                // Rutas dinámicas cargadas desde la base de datos
-                for (Ruta ruta : rutas) {
-                    if (ruta.getRolName() != null && !ruta.getRolName().isBlank()) {
-                        auth.requestMatchers(ruta.getPatron()).hasRole(ruta.getRolName());
-                    } else {
-                        auth.requestMatchers(ruta.getPatron()).permitAll();
+            // 2. RUTAS DINÁMICAS DESDE BD
+            try {
+                List<Ruta> rutas = rutaService.getRutas();
+                if (rutas != null) {
+                    for (Ruta r : rutas) {
+                        if (r.getPatron() != null && !r.getPatron().isBlank()) {
+                            if (r.getRolName() != null && !r.getRolName().isBlank()) {
+                                auth.requestMatchers(r.getPatron()).hasRole(r.getRolName());
+                            } else {
+                                auth.requestMatchers(r.getPatron()).permitAll();
+                            }
+                        }
                     }
                 }
+            } catch (Exception e) {
+                System.out.println("Error al cargar rutas: " + e.getMessage());
             }
 
+            // 3. TODO LO DEMÁS PROTEGIDO
             auth.anyRequest().authenticated();
         });
 
         http.formLogin(form -> form
-            .loginPage("/login")
-            .loginProcessingUrl("/login")
+            .loginPage("/auth/login")
+            .loginProcessingUrl("/login") // Spring Security escucha este POST
             .defaultSuccessUrl("/catalogo", true)
-            .failureUrl("/login?error=true")
             .permitAll()
         );
 
         http.logout(logout -> logout
             .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout=true")
+            .logoutSuccessUrl("/auth/login?logout=true")
             .invalidateHttpSession(true)
             .deleteCookies("JSESSIONID")
             .permitAll()
         );
 
-        // Sesión única por usuario: la nueva sesión expulsa a la anterior
-        http.sessionManagement(session -> session
-            .maximumSessions(1)
-            .maxSessionsPreventsLogin(false)
-        );
-
-        // Redirige a /acceso_denegado cuando un usuario no tiene permisos
-        http.exceptionHandling(ex -> ex
-            .accessDeniedPage("/acceso_denegado")
-        );
+        // Deshabilitar CSRF para que el logout POST funcione sin problemas
+        http.csrf(csrf -> csrf.disable());
 
         return http.build();
     }

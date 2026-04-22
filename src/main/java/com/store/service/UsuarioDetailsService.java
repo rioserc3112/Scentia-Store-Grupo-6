@@ -24,7 +24,7 @@ public class UsuarioDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String correo) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByCorreoAndActivoTrue(correo)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado o inactivo: " + correo));
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + correo));
 
         return new User(
                 usuario.getCorreo(),

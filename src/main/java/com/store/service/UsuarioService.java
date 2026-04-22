@@ -98,6 +98,26 @@ public class UsuarioService {
         usuarioRepository.save(usuario);
         return true;
     }
+    public Usuario autenticar(String correo, String password) {
+    // 1. Buscamos al usuario por correo
+    Optional<Usuario> optUsuario = usuarioRepository.findByCorreo(correo);
+
+    if (optUsuario.isPresent()) {
+        Usuario usuario = optUsuario.get();
+
+        // 2. Verificamos si la cuenta está activa (opcional pero recomendado)
+        if (!usuario.isActivo()) {
+            return null; // O podrías lanzar una excepción personalizada
+        }
+
+        // 3. Comparamos la contraseña usando el encoder
+        if (passwordEncoder.matches(password, usuario.getPassword())) {
+            return usuario;
+        }
+    }
+    
+    return null; // Si no existe o la clave es incorrecta
+}
 
     public Optional<Usuario> buscarPorCorreo(String correo) {
         return usuarioRepository.findByCorreo(correo);
